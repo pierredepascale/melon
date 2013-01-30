@@ -1,0 +1,9 @@
+define syntax-call easy (e)
+  syntax-case(e)
+    { easy(0) } => { #f } ;
+    { easy(?n) } => { #t } 
+  end 
+end ;
+
+display(easy(10)) ; display(easy(0)) ;
+

@@ -1,0 +1,48 @@
+def hello-world ()
+  display("Hello world")
+end ;
+
+hello-world () ;
+
+if (1) display ("True") else display ("False") end ;
+
+def macro unless(e)
+  syntax-case (e)
+    { unless(?test) ?body:* end } => { if (?test) ?body end }
+  end
+end ;
+
+unless (1)
+  display ("Unless Hello world")
+end ;
+
+def macro define(e)
+  syntax-case (e)
+    { define ?name (?args:*) ?body:* end ?inner:* } =>
+    { letrec ?name = fn (?args) ?body end in ?inner }
+  end
+end
+;
+
+def tt()
+  letrec a = fn (n) display(n) end in
+    a(10)
+end ;
+
+def test()
+  define a (n) 
+    display (n)
+  end
+  a(10)
+end ;
+
+test();
+
+def macro for(e)
+  syntax-case (e)
+    { for (?name = ?from:* to ?to) ?body:body end } =>
+    { letrec loop = fn (?name) if (?name < ?to) ?body ; loop (?name + 1) else 0 end end in loop(?from) }
+  end
+end ;
+
+for(i = 1 to 10) display(i) end ;

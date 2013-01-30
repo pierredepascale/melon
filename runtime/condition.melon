@@ -1,0 +1,140 @@
+class Condition
+end
+
+def default_handler(c::Condition)
+end
+
+def default_handler_description(c::Condition)
+end
+
+def signal(c::Condition, args...)
+end
+
+class SimpleCondition(Condition)
+end
+
+def condition_message(c::SimpleCondition)
+end
+
+def codition_arguments(c::SimpleCondition)
+end
+
+class SeriousCondition(Condition)
+end
+
+class Error(SeriousCondition)
+end
+
+def error(x::Any, args...)
+end
+
+def error(x::String, args...)
+end
+
+class SimpleError(Error, SimpleCondition)
+end
+
+class Restart(Condition)
+end
+
+class Handler
+end
+
+def handler_function(x::Handler)
+end
+
+def make_handler(x::Function)
+end
+
+def handler_matches?(x::Handler, y::Condition)
+end
+
+/* macro try */
+
+class ArithmeticError(Error)
+end
+
+class StackOverflowError(Error)
+end
+
+class KeyboardInterrupt(Error)
+end
+
+class InternalError(SimpleError)
+end
+
+class AssertError(SimpleError)
+end
+
+class UnboundError(Error)
+end
+
+class UnboundVariableError(Error)
+end
+
+class PropertyError(Error)
+end
+
+class PropertyErrorGeneric(Property)
+end
+
+class PropertyUnboundError(PropertyError, UnboundError)
+end
+
+class PropertyTypeError(PropertyError, TypeError)
+end
+
+class PropertyNotFoundError(PropertyError)
+end
+
+class AsError(TypeError)
+end
+
+class RangeError(Error)
+end
+
+class TypeError(Error)
+end
+
+class CallError(Error)
+  slot call_error_function::Function
+  slot call_error_arguments::Function
+end
+
+class ArityError(CallError)
+end
+
+class NArityError(ArityError)
+end
+
+class UnknownFunctionError(CallError)
+end
+
+class ArgumentTypeError(TypeError, CallError)
+end
+
+class AmbiguousMethodError(CallError)
+end
+
+class NoApplicableMethodError(CallError)
+end
+
+class NoNextMethodError(CallError)
+end
+
+class IncongruentMethodError(Error)
+end
+
+class CplError(Error)
+end
+
+class CompilerError(Error)
+end
+
+class SyntaxError(CompilerError)
+end
+
+class MacroError(SyntaxError)
+end
+
+

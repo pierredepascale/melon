@@ -1,0 +1,28 @@
+syntax-case ({ while (a > 2) toto ; rata end })
+  { while(?e:*) ?b:* end } => display(list(e,b)) 
+end ;
+
+display("a") ; 
+
+define syntax-stmt while(e)
+  syntax-case (e)
+    { while (?e:*) ?body:* end } => 
+    { letrec *while = lambda () if (?e) ?body ; *while() end end ; *while() }
+  end
+end 
+
+display("a") ; 
+
+define *a* = 10 end 
+
+display("Hello World") ;
+
+display(*a*) ;
+
+while(*a* > 0)
+  display(*a*) ; 
+  newline () ;
+  *a* := *a* -1 ;
+  display(*a*) 
+end 
+

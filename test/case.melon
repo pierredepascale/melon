@@ -1,0 +1,17 @@
+// case.melon -- case syntax definition
+
+define syntax-stmt case(e)
+  syntax-case(e)
+    { case (?e:*) ?cases:* end } => { let a = ?e ; case-clause (a) ?cases:* end }
+  end
+end
+
+define syntax-stmt case-clause(e)
+  syntax-case(e)
+    { case-clause (?var)  ?key => ?body:body ?rest:* end } =>
+    { if (?var = ?key) ?body else case-clause ?rest end } ; 
+    
+    { case-clause (?var) end } => { else #f } ;
+    { case-clause (?var) otherwise ?body:body end } => { else ?body } ;
+  end
+end

@@ -1,0 +1,6 @@
+def delete_file(file::String)
+end
+
+def file_exists?(file::String)
+end
+

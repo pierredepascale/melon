@@ -1,0 +1,4 @@
+when(#t) display("ok") end ;
+when(#f) display("ko") end ;
+display("hello") ; display("world") ;
+unless (1 = 2) display("1 != 2")  end

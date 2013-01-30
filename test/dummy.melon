@@ -1,0 +1,4 @@
+syntax-case({ 1 })
+  { 1 } => display("ok") ; 
+  { 2 } => display("ko")
+end

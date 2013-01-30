@@ -1,0 +1,5 @@
+define a(a)
+  display("b") 
+end ;
+
+a(1)

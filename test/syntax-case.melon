@@ -1,0 +1,17 @@
+// test for syntax-case
+
+display(
+  syntax-case({ a })
+    { b } => "Test 1 => KO\n" 
+    ;
+    { a } => "Test 1 => OK\n" 
+  end 
+) 
+;
+display(
+  syntax-case({ "Test2 => OK" })
+    { b } => "Test 2 => KO\n" 
+    ;
+    { ?a } => { ?a }
+  end 
+) 

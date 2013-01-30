@@ -1,0 +1,101 @@
+
+Collection = %make_class(:Collection) ;
+
+def each(c::Collection, proc::Function)
+end
+
+def map(collection::Collection, proc::Function)
+end
+
+class Set(Collection)
+  slot elements::List = nil
+end
+
+def as(type::Set, l::List)
+end
+
+def set(init::List)
+end
+
+def length(s::Set)
+  length(s.elements)
+end
+
+def member?(obj, s::Set)
+  member?(obj, s.elements)
+end
+
+/* Sequence */
+class Sequence(Collection)
+end
+
+def sort(s::Sequence, predicate::Function)
+end
+
+def +(s1::Sequence, s2::Sequence)
+end
+
+def -(s1::Sequence, s2::Any)
+end
+
+class IndexedSequence(Sequence)
+end
+
+class Vector(IndexedSequence)
+end
+
+def [](v::Vector, index::Fixnum)
+  %vector_ref(v, index)
+end
+
+def []_setter(v::Vector, index::Fixnum, obj::Any)
+  %vector_set(v, index, obj)
+end
+
+
+class Hashtable(IndexedSequence)
+end
+
+class List(Collection)
+end
+
+class Pair(List)
+  slot head :: Any
+  slot tail :: Any
+end
+
+def pair(a,b) make(Pair, :head a, :tail b) end
+end
+
+class Nil(List)
+end
+
+nil = make(Nil)
+
+def length(l::Pair)
+  1+length(l.tail)
+end
+
+def length(l::Nil)
+  0
+end
+
+def empty?(l::Pair)
+  false
+end
+
+def empty?(l::Nil)
+  true
+end
+
+def member?(obj, _::Nil)
+  false
+end
+
+def member?(obj, l::Pair)
+  if (obj == l.head)
+    true
+  else
+    member?(obj, l.tail)
+  end
+end

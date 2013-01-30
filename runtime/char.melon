@@ -1,0 +1,92 @@
+/**
+ * System
+ */
+
+Char = %make_class(:Char);
+
+def as(type==Num, ch::Char)
+  %char_to_integer(ch)
+end
+
+def as(type==Char, n::Num)
+  %integer_to_char(n)
+end
+
+def as(type==Num, ch::Char)
+  %char_to_integer(ch)
+end
+
+def upper(ch::Char)
+  if (ch.lower?)
+    ch.as(Int)-'a'.as(Int)+'A'.as(Int) ;
+  else
+    ch
+  end
+end
+
+def lower(ch::Char)
+  if (ch.upper?)
+    ch.as(Int)-'A'.as(Int)+'a'.as(Int) ;
+  else
+    ch
+  end
+end
+
+def digit(ch::Char)
+  if (ch.digit?)
+    as(Int, ch)-as(Int, '0')
+  else
+    value_error("Bad character for DIGIT", ch)
+  end
+end
+
+def upper?(ch::Char)
+  'A'.as(Int) <= ch.as(Int) &&
+  ch.as(Int) <= 'Z'.as(Int))
+end
+
+def lower?(ch::Char)
+  'a'.as(Int) <= ch.as(Int) &&
+  ch.as(Int) <= 'z'.as(Int))
+end
+
+def alpha?(ch::Char)
+  ch.upper? || ch.lower? || ch.digit?
+end
+
+def digit?(ch::Char)
+  '0'.as(Int) <= ch.as(Int) &&
+  ch.as(Int) <= '9'.as(Int) 
+end
+
+def *(ch::Char, n::Fixnum)
+  let str = make(String, n) ;
+  for (i=0; i<str.length ; i++)
+    str[i] = ch 
+  end ;
+  str
+end
+
+def <(ch1::Char, ch2::Char)
+  ch1.as(Int) < ch2.as(Int)
+end
+
+def <=(ch1::Char, ch2::Char)
+  ch1.as(Int) <= ch2.as(Int)
+end
+
+def ==(ch1::Char, ch2::Char)
+  ch1.as(Int) == ch2.as(Int)
+end
+
+def !=(ch1::Char, ch2::Char)
+  ch1.as(Int) != ch2.as(Int)
+end
+
+def >=(ch1::Char, ch2::Char)
+  ch1.as(Int) >= ch2.as(Int)
+end
+
+def <=(ch1::Char, ch2::Char)
+  ch1.as(Int) <= ch2.as(Int)
+end

@@ -1,0 +1,11 @@
+class Symbol
+end
+
+def as(type==Symbol, str::String)
+  %string_to_symbol(str)
+end
+
+def as(type==String, sym::Symbol)
+  %symbol_to_string(sym)
+end
+

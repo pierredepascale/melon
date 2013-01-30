@@ -1,0 +1,50 @@
+PROGRAM:
+  STMT ; STMT
+  STMT
+
+STMT:
+  DEFINE name ( [ params { , params } * ] ) BODY END 
+  DEFINE VARIABLE name = expression 
+//  DEFINE CONSTANT name = expression 
+//  DEFINE CLASS name ( SUPERS ) slots END
+//  DEFINE DYNAMIC name = expression 
+//  DEFINE CONDITION name ( SUPERS ) SLOTS END
+//  DEFINE SYNTAX-CALL name ( args ) exp END
+//  DEFINE SYNTAX-STMT name (e) exp END
+//  DEFINE SYNTAX-BLOCK name (e) exp END
+//  DEFINE SYNTAX-VALUE 
+//  DEFINE SYNTAX-RULES name (e) rules END
+  exression
+
+RULES:
+  rule ; rule
+  rule
+
+RULE:
+  { PATTERN } => { PATTERN } ;
+
+BODY:
+  exp ; exp
+  exp
+
+EXP:
+  LET name = exp ; BODY
+  IF (exp) body ELSE body end 
+  exp := exp 
+  arith
+
+ARITH:
+  & , | ,
+  < , <= , ==, =, ~=, ~== , >=, > , >=
+  + , - ,
+  * , /
+  
+FACTOR:
+  NAME ( [ exp { , params } ] )
+  NAME [ [ exp { , params } ] )
+  NAME
+  factor . NAME
+  IMMEDIATE
+  LAMBDA ( [ NAME { , NAME } ] ) BODY END
+
+==============================================================================

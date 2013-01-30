@@ -1,0 +1,36 @@
+define ass(e)
+  syntax-case(e)
+//    { ?a:name = 1 } => display("Hourah") ;
+    { ?a:name = ?val:* } => #t ;
+    { ?a:* } => #f 
+  end 
+end ;
+
+define asses(e)
+  syntax-case(e)
+    { ?a:name = ?exp ; ?rest:asses } => { let ?a = ?exp ; ?rest } ;
+    { ?a:name = ?exp } => { let ?a = ? exp }
+  end
+end ;
+
+
+define syntax-stmt bind(e)
+  syntax-case(e)
+    { bind (?ass:ass) ?body:* end } => { let ?ass ; ?body }
+  end
+end
+
+;
+
+bind(v = 2) display(v) end ;
+
+syntax-case ({ let a = 1 })
+  { let ?ass:test } => display("hourah")
+end
+
+;
+
+syntax-case ({ })
+  { a = 1 } => display("bad!!!") ;
+  { ?a:* } => display ("OKKKKKKKKKKKKKKKKKK!")
+end

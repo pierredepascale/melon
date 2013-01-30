@@ -1,0 +1,6 @@
+(include "lexer.scm")
+(include "sst.scm")
+(include "expand.scm")
+(include "parser.scm")
+(include "interpreter.scm")
+(include "repl.scm")

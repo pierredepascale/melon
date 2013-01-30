@@ -1,0 +1,21 @@
+// basic.melon
+
+1 + 2 ;
+display("Hello World\n") ;
+if (1 = 2) display("KO\n") else display("ok\n") end ;
+//a[3] ;
+display(3 + (4 * 5)) ;
+(lambda (disp) lambda (v) disp(v) end end)(display)("curry ok\n") ;
+display((lambda (a) a end) ("ok\n",2,3)) ;
+let a = 1234 ;
+  display(a) ;
+if (1 = 2) display("1") ; display("2")  else 1 end ;
+letrec loop = lambda (n) if (n < 10) display(".") ; loop(n + 1) else display("\n") end end ;
+  loop(0) 
+define toto(n)
+  define lp (n)
+    if (n < 10) display("-") ; lp (n + 1) else display(">") end
+  end ;
+  lp (0) 
+end ;
+toto(10) 

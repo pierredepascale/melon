@@ -1,0 +1,31 @@
+// sieve.melon -- sieve of Eratosthene
+
+define sieve(n)
+  let primes = make-vector(n, #t) ;
+  for (i from 2 to n)
+    if (primes[i])
+      for (j from i+i to n by n)
+        primes[j] := #f 
+      end 
+    end
+  end ;
+  primes
+end ;
+
+define main()
+  let primes = sieve(10000) ;
+  for (i from 2 to 10000)
+    if (primes[i])
+      display(i) ; newline()
+    end
+  end
+end 
+
+define syntax-stmt for(e)
+  syntax-case (e)
+    { for (?var:name from ?start:expression to ?end:expression by ?incr:expression) ?body:body end } =>
+    { letrec loop = lambda (?var) if (?var <= ?end) ?body ; loop(?var + ?incr) end end ; loop(?start) }
+  end
+end 
+
+ 

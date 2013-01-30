@@ -1,0 +1,60 @@
+class String
+end
+
+def as(type==String, ch::Char)
+  char_to_string(ch)
+end
+
+def as(type==String, n::Num)
+  number_to_string(n)
+end
+
+def <(s1::String, s2::String)
+end
+
+def <=(s1::String, s2::String)
+end
+
+def ==(s1::String, s2::String)
+end
+
+def >=(s1::String, s2::String)
+end
+
+def >(s1::String, s2::String)
+end
+
+def upper(s::String)
+end
+
+def lower(s::String)
+end
+
+def +(s1::String, s2::String)
+end
+
+def *(str::String, n::Fixnum)
+end
+
+def last(str::String)
+end
+
+def position(str::String, ch::Char)
+end
+
+def [](str::String, slice::Slice)
+end
+
+def [](str::String, index::Fixnum)
+  %string_ref(str, index)
+end
+
+def []=(str::String, index::Fixnum, char::Char)
+  %string_set(str, index, char)
+end
+
+def prefix?(p::String, str::String)
+end
+
+def suffix?(p::String, str::String)
+end

@@ -1,0 +1,40 @@
+class Num
+end
+
+class Rational(Num)
+end
+
+class SimpleRational(Rational)
+  slot numerator :: Int = 0
+  slot denominator :: Int = 1
+end
+
+class Int(Rational)
+end
+
+class Inexact(Num)
+end
+
+class Bignum (Int)
+end
+
+class Fixnum(Int)
+end
+
+class Double(Num)
+end
+
+class Real(Inexact)
+end
+
+class Complex(Inexact)
+end
+
+def as(type::Real, fx::Fixnum)
+  %fixnum_to_real(fx)
+end
+
+def as(type::Complex, fx::Fixnum)
+  make(Complex, :real => as(Real, fx), :imaginary => 0)
+end
+

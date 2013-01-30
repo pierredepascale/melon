@@ -1,0 +1,14 @@
+define syntax-stmt when(e)
+  syntax-case (e)
+   { when (?e:*) ?body:* end } => { if (?e) ?body end } 
+  end 
+end ;
+
+define syntax-stmt unless(e)
+  syntax-case (e)
+    { unless (?e:*) ?body:* end } => { if (~(?e)) ?body end } 
+  end
+end ;
+
+unless(1 = 2) display ("BADDDDDDDDDDDDDDDDDDD!!!!") end ;
+when(1 = 2) display("GOOOOOOOOOOOOOOOO") end ;

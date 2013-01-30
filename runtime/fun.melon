@@ -1,0 +1,24 @@
+
+class Function
+  slot function_name::Symbol
+  slot function_names::List
+  slot function_specs::List
+  slot function_nary?::Bool
+  slot function_arity::Int
+end
+
+class Generic
+  slot function_mets::List
+end
+
+def generic_add_method(x::Generic, y::Method)
+end
+
+def order_applicable_methods(x::Generic, args...)
+end
+
+class Method
+end
+
+def method_applicable?(m::Method, args...)
+end

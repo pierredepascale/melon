@@ -1,0 +1,11 @@
+def hello(h :: Any)
+  %puts("Hi") 
+end ;
+
+def hello(text :: String)
+  %puts("Hello ") ; %puts(text)
+end ;
+
+hello("hello") ;
+hello(123) ;
+

@@ -1,0 +1,8 @@
+Boolean = %make_class(:Boolean);
+
+false = %false();
+true = %true() ;
+
+def not(v::Boolean)
+  if (v) false else true end
+end

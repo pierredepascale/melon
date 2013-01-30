@@ -1,0 +1,3 @@
+display("Hello world") ;
+
+if (1) display("True") else display("False") end ;

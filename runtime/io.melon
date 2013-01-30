@@ -1,0 +1,105 @@
+/* IO */
+
+class Port
+end
+
+def open(port::subclass(Port), spec::String)
+end
+
+def close(port::Port)
+end
+
+macro with_port (name port) body end
+
+def eof_object?(x::Char)
+end
+
+class InputPort(Port)
+end
+
+STDIN = 
+STDOUT =
+STDERR =
+
+macro with_open_file(e)
+  syntax_case(e)
+    { with_open_file(?id:name = ?e:exp) ?:body end } =>
+      { begin
+          let _stream = open_input_file(?e)
+          let ?id = _port
+          ?body
+        end
+      }
+  end
+end
+
+def write(s::Stream, obj::String)
+end
+
+def write(s::Stream, obj::Num)
+end
+
+def write_char(s::Stream, ch::Char)
+end
+
+def write_line(port::Port, str::String)
+end
+
+def read(s::Stream)
+end
+
+def read_char(s::Stream)
+end
+
+def read_line(s::Port)
+end
+
+class FilePort(Port)
+end
+
+def close(p::FilePort)
+end
+
+class FileInputPort(FilePort)
+end
+
+class FileOutputPort(FilePort)
+end
+
+def open(p==FileInputPort, name::String)
+end
+
+def open(p==FileOutputPort, name::String)
+end
+
+class StringPort(Port)
+end
+
+class StringInputPort(StringPort)
+end
+
+class StringOutputPort(StringPort)
+end
+
+def port_contents(p::StringPort)
+end
+
+def open(p==StringInputPort, data::String)
+end
+
+def port_position(p::StringPort)
+end
+
+def open(p==StringOutputPort, str::String)
+end
+
+class IOError(Error)
+end
+
+class FileOpeningError(IOError)
+  slot file_opening_error_filename::String
+end
+
+class DirectoryError(FileOpeningError)
+end
+

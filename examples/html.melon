@@ -1,0 +1,73 @@
+// html.melon -- easy HTML generation with macros
+
+define syntax-stmt html(e)
+  letrec atts = 
+    lambda (e)
+      syntax-case(e)
+        { ?var:name = ?val:expression ; ?rest:atts } =>
+        { display("var=") ; display(?val) ; display (" ") ; ?rest } ;
+            
+        { ?var:name = ?val:expression } =>
+        { display("var=") ; display(?val) } ;
+
+        { } => { }
+      end 
+    end ;
+  syntax-case(e)
+    { html ?body:body end } => 
+    { display("<html>") ; ?body ; display("</html>") } 
+    ;
+    { html(?a:atts) ?body:body end } => 
+    { display("<html ") ; ?a ; display(">") ; ?body ; display("</html>") }
+  end 
+end ;
+
+define syntax-definer tag(e)
+  syntax-case(e)
+    { define tag ?name:expression end } 
+    => 
+    { define syntax-stmt ?name(e)
+        syntax-case(e)
+          { ?name ??body:body end } 
+          => 
+          { display("h") 
+//            display("<") ; display(?name) ; display(">") ;
+//            display(??body) ;
+//            display("</") ; display(?name) ; display(">") 
+          }
+        end
+      end
+    }
+  end
+end ;
+
+define tag head end ;
+define tag body end ;
+define tag title end ;
+define tag b end ;
+define tag em end ;
+define tag a end ;
+define tag img end ;
+define tag i end ;
+define tag meta end ;
+
+define syntax-stmt hhhh(e)
+  syntax-case(e)
+    { hhhh ?body end } => { display("hhhh") }
+  end 
+end ;
+
+head "aa"  end ;
+
+define main (a)
+  html
+    head
+      title display("Hello World") end
+    end ;
+    body
+      display("Easy HTML generation with macros") 
+    end
+  end
+end ;
+
+main(1)

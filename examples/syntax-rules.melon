@@ -1,0 +1,35 @@
+// syntax-rules.melon -- simple syntax-rules macros
+
+define syntax-definer syntax-rules(e)
+  syntax-case(e)
+    { 
+      define syntax-rules ?name:name 
+        ?pat=>rules:*
+      end
+    } =>
+    { 
+      define syntax-stmt ?name(e)
+        syntax-case(e)
+          ?pat=>rules
+        end
+      end
+    }
+  end
+end ;
+
+define syntax-rules unless*
+  { unless*(?e:expression) ?body:body end } =>
+  { if (~(?e)) ?body end }
+end ;
+
+define syntax-definer syntax(e)
+  syntax-case(e)
+    { define syntax ?syn:name
+        { define ?any:* end } => ?pattern:expression 
+      end } => 
+    { define syntax-definer ?syn (e)
+        syntax-case(e)
+          { define ?any end } => ?pattern
+    }
+  end
+end

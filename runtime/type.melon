@@ -1,0 +1,105 @@
+class Any
+end
+
+class Type
+end
+
+class Class(Type)
+  slot class_name
+  slot class_parents
+  slot class_ancestors
+  slot class_direct_slots
+  slot class_slots
+  slot class_children
+end
+
+class Singleton(Type)
+  slot singleton_object
+end
+
+def singleton(obj::Any)
+  make(Singleton, obj)
+end
+
+class TypeUnion(Type)
+  slot type_union_members
+end
+
+def type_union(types...)
+end
+
+def false_of(type::Type)
+  type_union(singleton(#f), type)
+end
+
+def one_of(objs...)
+  apply(type_union, objs.map(singleton))
+end
+
+def type_union(objs...)
+end
+
+class Subclass(Type)
+  slot subclass_class::Class
+end
+
+def subclass(klass::Class)
+end
+
+macro class(e)
+  def slot(e)
+    syntax_case(e)
+      { slot ?name:name } => make_slot(Slot, :name => ?name, :type => Any)
+      { slot ?name:name :: ?type:exp } => make_slot(Slot, :name => ?name, :type => Any) 
+    end
+  end
+
+  def slots(e)
+    syntax_case(e)
+      { ?s:slot ; ?ss:slots } => pair(?s, ?ss)
+      { } => nil
+    end
+  end
+  
+  def generate_getters_and_setters(e)
+    syntax_case(e)
+      { ?slot ; 
+  syntax_case(e)
+    { class ?name:name (?parent:exp)
+        ?s:slots
+      end
+    } => {
+      ?name = %make(Class)
+      ?name.class_name = ?name.str
+      ?name.class_debug_name = ?name.str
+      ?name.class_parents = ?parent
+      ?name.class_direct_slots = ?s
+      ?name.class_slots = compute_slots(?s)
+      generate_getters_and_setter(?s)
+    }
+    { class ?name:name
+        ?s:slots
+      end
+    } => {
+      ?name = %make(Class)
+      ?name.class_name = ?name.str
+      ?name.class_debug_name = ?name.str
+      ?name.class_parents = list(Any)
+      ?name.class_direct_slots = ?s
+      ?name.class_slots = compute_slots(?s)
+    }
+  end
+end
+
+
+def instance?(obj, type::subclass(Class))
+end
+
+def subtype?(type1::Type, type2::Type)
+end
+
+def class_of(obj)
+end
+
+def make(type::Type, inits...)
+end

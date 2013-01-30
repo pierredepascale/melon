@@ -1,0 +1,48 @@
+def hello_world()
+  display("Hello world") 
+end ;
+
+hello_world()
+
+macro class (exp)
+  macro_case(exp)
+    @{ class ?name:name (?parent*:name) ?body:body end } =>
+    @{ ensure_class!(?name) ; set_namespace!(?name) ; ?body ; reset_namespace!() ; }
+  end
+end
+
+macro do(exp)
+  macro_case(exp)
+    @{ do ?body:body end } => @{ fn () { ?body } }
+class HelloWorld
+  list(a for i in 1..3 if i.odd?)
+end
+
+set_context #name,
+
+print(name, base=10)
+print(name & a && hash
+
+plus(a@Int, b@Int) => Number
+
+method plus(a@Int, b@int)
+  cool
+end
+
+def +(a,b)
+  pt(10,20)
+end
+pt(10,20)
+
+class Toto
+  def init(this)
+    this.x = x
+    this.y = y
+  end
+end
+
+protocol <<TotoProtocol>>
+  name : function
+  server : function
+end
+Toto()

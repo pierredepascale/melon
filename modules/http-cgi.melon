@@ -1,0 +1,109 @@
+// http-cgi.melon -- CGI modules
+
+def auth-type ()
+  getenv("AUTH_TYPE") 
+end ;
+
+def content-length()
+  let val = getenv("CONTENT_LENGTH") ;
+  if (val)
+    string->number(val)
+  else
+    0
+  end
+end ;
+display("a") ;
+
+def content-type ()
+  getenv("CONTENT_TYPE") 
+end ;
+display("a") ;
+
+def gateway-interface ()
+  getenv("GATEWAY_INTERFACE") 
+end ;
+display("a") ;
+
+def path-info()
+  getenv("PATH_INFO") 
+end ;
+display("a") ;
+
+def path-translated ()
+  getenv("PATH_TRANSLATED")
+end ;
+display("a") ;
+
+def query-string()
+  getenv("QUERY_STRING")
+end ;
+display("a") ;
+
+def remote-addr ()
+  getenv("REMOTE_ADDR")
+end ;
+
+def remote-host ()
+  getenv("REMOTE_HOST")
+end ;
+
+def remote-ident ()
+  getenv("REMOTE_IDENT")
+end ;
+
+def remote-user ()
+  getenv("REMOTE_USER")
+end ;
+
+def request-method ()
+  getenv("REQUEST_METHOD")
+end ;
+
+def script-name ()
+  getenv("SCRIPT_NAME") 
+end ;
+
+def server-name ()
+  getenv("SERVER_NAME") 
+end ;
+
+def server-port ()
+  getenv("SERVER_PORT") 
+end ;
+
+def server-protocol ()
+  getenv("SERVER_PROTOCOL") 
+end ;
+
+def server-software ()
+  getenv("SERVER_SOFTWARE") 
+end ;
+
+def message-body ()
+  let len = content-length() ;
+  let str = make-string(len) ;
+  letrec loop
+       = lambda (n)
+           if (n < len)
+             string-set!(str, n, read-char()) ; // should be str[n] := read-char()
+             loop(n + 1) 
+           end ;
+  loop(0) ;
+  str 
+end ;
+
+def syntax-stmt with-cgi-response(e)
+  syntax-case(e)
+    { with-cgi-response ?body:body end } =>
+    { call-with-cgi-response(list(), lambda () ?body end) }
+  end 
+end ;
+
+def call-with-cgi-response(headers, proc)
+  proc()
+end ;
+
+display("Server Software:") ;
+display(server-software()) ; 
+newline()
+

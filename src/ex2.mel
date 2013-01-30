@@ -1,0 +1,29 @@
+def macro defstmt (e)
+  syntax-case(e)
+    { defstmt ?name ?code:* end } =>
+    { def macro ?name (e)
+        syntax-case (e)
+          ?code
+        end
+      end
+    }
+  end
+end ;
+
+def macro when (e)
+  syntax-case(e)
+    { when(?exp) ?body:* end } => { if (?exp) ?body end }
+  end
+end;
+
+defstmt unless
+  { unless (?exp) ?body:* end } => { if (?exp) ?body end }
+end ;
+
+when(1)
+  display("When hello world")
+end;
+
+unless(1)
+  display("Hello world")
+end;

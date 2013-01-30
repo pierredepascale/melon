@@ -1,0 +1,169 @@
+// prelude.melon -- predefined procedures
+
+// SYNTAX DEFINITION ================================================================
+
+define syntax-stmt when(e)
+  syntax-case (e)
+    { when(?e:*) ?body end } => { if (?e) ?body end }
+  end
+end ;
+
+define syntax-stmt unless(e)
+  syntax-case (e)
+    { unless(?e:*) ?body end } => { if (~(?e)) ?body end }
+  end
+end ;
+
+define syntax-stmt while(e)
+  syntax-case (e)
+    { while (?e) ?body end } => 
+    { letrec *while = lambda () if (?e) ?body ; *while() end end ; *while() }
+  end
+end ;
+
+define syntax-stmt until(e)
+  syntax-case (e)
+    { until (e) ?body end } =>
+    { letrec *until = lambda () unless (?e) ?body ; *until() end end ; *until() }
+  end
+end ;
+
+define syntax-stmt case(e)
+  letrec cases 
+       = lambda (e)
+           syntax-case (e)
+             { ?test:expression => ?body ; ?next:cases } =>
+             { if (?test) ?body else ?next } ;
+             
+             { ?test:expression => ?body } =>
+             { if (?test) ?body else error("case fallthrough") } ;
+
+             { else ?body } => { ?body } ;
+           end 
+         end ;
+  syntax-case(e)
+    { case ?c:cases end } => { ?c }
+  end
+end ;
+
+define syntax-stmt select(e)
+  syntax-case (e)
+    { select (?e:expression) ?val:expression => ?body ; ?rest:* end }
+    { if (?e = ?val) ?body else select (?e) ?rest end } ;
+
+    { select (?e:expression) ?val:expression => ?body end }
+    { if (?e = ?val) ?body else error("select fallthrough") end } ;
+
+    { select (?e:expression) else ?body end }
+    { ?body } ;
+
+    { select (?e:expression by ?op:name) ?val:expression => ?body ; ?rest:* end }
+    { if (?op(?e,?val)) ?body else select (?e) ?rest end } ;
+
+    { select (?e:expression by ?op:name) ?val:expression => ?body end }
+    { if (?op(?e, ?val)) ?body else error("select fallthrough") end } ;
+
+    { select (?e:expression by ?op:name) else ?body end }
+    { ?body } 
+  end
+end ;
+
+define syntax-stmt iterate(e)
+  letrec var+exp
+       = lambda (e)
+           syntax-case (e)
+             { () } => pair($nil, $nil) ;
+             { (?var:name = ?exp:expression ; ?rest:* } => 
+               let r = var+exp(?rest) ;
+                 pair(append(list(?var), head(r)),
+                      append(list(?exp), tail(r))) ;
+           end
+         end ;
+ 
+  syntax-case (e)
+    { iterate ?var:name (?vars+exps:var+exp) ?body end } =>
+      let vars = head(vars+exps) ;
+      let exps = tail(vars+exps) ;
+        { letrec ?var = lambda (?vars) ?body end ; ?var(?exps) }
+  end
+end ;
+
+iterate all(a = 1)
+  when (a < 10)
+    display(a) ;
+    all(a + 1) 
+  end
+end ;
+    
+
+// LIST PROCEDURES ==================================================================
+define length(l)
+  if (null?(l)) 0 else 1 + length(l.tail) end ;
+end ;
+
+define map(proc, l)
+  if (null?(l)) l else %pair(proc(l.head), map(proc, l.tail)) ;
+end ;
+
+define for-each(proc, l)
+  unless (null?(l))
+    proc(l.head) ;
+    for-each(proc, l.tail) ;
+  end ;
+end ;
+ 
+define append(l1, l2)
+  if (null?(l1)) l2 else %pair(l1.head, append(l1.tail, l2)) end ;
+end ;
+
+define filter(pred?, l)
+  if (null?(l)) 
+    l 
+  else
+    if (pred?(l.head))
+      %pair(l.head, filter(pred?, l.tail)) ;
+    else
+      filter(pred?, l.tail) ;
+    end ;
+  end;
+end ;
+
+// VECTOR =======================================================================
+
+define aref(vector, index)
+  %uref(vector, index) ;
+end ;
+
+// STRING =======================================================================
+
+// CHARACTERS ===================================================================
+
+// NUMBERS ======================================================================
+
+define +(a,b) %fix+(a,b) end ;
+define -(a,b) %fix-(a,b) end ;
+define *(a,b) %fix*(a,b) end ;
+define /(a,b) %fix/(a,b) end ;
+define quotient(a,b) %quotient(a,b) end ;
+define remainder(a,b) %remainder(a,b) end ;
+
+// I/O ==========================================================================
+
+define $eof = %imm(4) end ;
+
+define read-char(port)
+  %read-char(port) 
+end ;
+
+define peek-char(port)
+  %peek-char(port) 
+end ;
+
+define open-input-file(file-name)
+end ;
+
+define open-output-file(file-name)
+end ;
+
+define display(object, port)
+end ; 

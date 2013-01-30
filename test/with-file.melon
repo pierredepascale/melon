@@ -1,0 +1,12 @@
+// with-file.melon -- with-file syntax definition
+
+define syntax-stmt with-input-file(e)
+  syntax-case (e)
+    { with-input-file(?var:name = ?expression) ?body:* end} =>
+      { let ?var = open-input-file(?expression) ; ?body } 
+  end 
+end
+;
+with-input-file(port = "dylan.scm")
+  display(read-char(port))
+end

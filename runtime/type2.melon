@@ -1,0 +1,70 @@
+// type.melon -- type definition
+
+define %make-class (name, super-classes, subclasses, direct-slots, slots, class-cpl)
+  let obj = %alloc(7) ;
+  %set!(obj, 0, <class>) ;
+  %set!(obj, 1, name) ;
+  %set!(obj, 2, super-classes) ;
+  %set!(obj, 3, subclasses) ;
+  %set!(obj, 4, direct-slots) ;
+  %set!(obj, 5, slots) ;
+  %set!(obj, 6, class-cpl) ;
+  obj
+end ;
+
+define <any> = %make-class(#f, #(), #(), #(), #(), #f) end ;
+define <type> = %make-class(<any>,
+define <class> =
+define <slot-info>
+define <generic>
+define <method>
+
+define isa?(object, type)
+  subtype?(class-of(object), type)
+end ;
+
+define subtype?(type1, type2)
+  subclass(type1, type2) 
+end ;
+
+define make(class :: <class>, inits ...)
+  let obj = %alloc(length(%ref(class,5))) ;
+  iterate init (inits = inits)
+    let slot = head(inits) ;
+    let val = head(tail(inits)) ;
+    slot-setter(slot)(obj, val) ;
+    init(tail(tail(inits))) 
+  end ;
+  obj
+end ;
+    
+
+define class-name(class :: <class>)
+  %ref(class, 0) 
+end ;
+
+define class-parents
+define class-precedence-list
+define class-direct-slots
+define class-slots
+define class-subclasses
+
+define slot-name
+define slot-owner
+define slot-getter
+define slot-setter
+define slot-type
+define slot-init
+define find-getter
+define find-setter
+define slot-bound?
+define add-slot
+define remove-slot
+
+define procedure-name
+define procedure-arguments
+define procedure-specilizer
+define procedure-nary?
+define procedure-arity
+define procedure-type
+
